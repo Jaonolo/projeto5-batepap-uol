@@ -10,11 +10,15 @@ header, footer {
     display: flex;
     justify-content: space-between;
     height: 80px;
-    align-items: center   
+    align-items: center;
+    font-size: 45px
 }
 
 header {
     padding: 0 22px;
+}
+header img {
+    height: 53px
 }
 
 footer {
