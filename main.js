@@ -29,3 +29,7 @@ const formatTime = (timestamp) => {
 
     return `${hours}:${minutes}:${seconds}`
 }
+
+const togglePanels = (selector) => {
+    document.querySelector(selector).classList.toggle('hidden')
+}
