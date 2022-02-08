@@ -34,6 +34,14 @@ const togglePanel = (selector) => {
     document.querySelector(selector).classList.toggle('hidden')
 }
 
+const loadMessages = () => {
+    queryServer().forEach((elem) => {
+        renderMessage(createMessage(elem))
+    })
+}
+
+// loadMessages()
+// setInterval(loadMessages, 3000)
 
 /* TEMPORARY */
 const submitMessage = () => {
