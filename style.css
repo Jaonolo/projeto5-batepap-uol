@@ -1,0 +1,14 @@
+header, footer {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    align-items: center   
+}
+
+header {
+    padding: 0 22px;
+}
+
+footer {
+    padding: 0 18px;
+}
