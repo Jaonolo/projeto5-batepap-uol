@@ -12,3 +12,24 @@ header {
 footer {
     padding: 0 18px;
 }
+
+main {
+    background-color: #f3f3f3
+}
+
+main div {
+    padding: 12px 9px;
+    margin-bottom: 4px;
+}
+
+.system {
+    background-color: #DCDCDC;
+}
+
+.public {
+    background-color: #FFFFFF;
+}
+
+.reserved {
+    background-color: #FFDEDE;
+}
