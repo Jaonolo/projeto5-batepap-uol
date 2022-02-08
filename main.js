@@ -2,13 +2,13 @@ const createMessage = (options) => {
 
     const time = formatTime(options.timestamp)
     const messageHeader = options.type === 'system' ?
-        `  <strong>${options.origin}</strong> para <strong>${options.target}</strong>:  `:
-        `  <strong>${options.origin}</strong>  `
+        `  <strong>${options.origin}</strong>  `:
+        `  <strong>${options.origin}</strong> para <strong>${options.target}</strong>:  `
 
     return `
         <div class="${options.type}">
-            <small>(${time})</small>
             <p>
+                <small>(${time})</small>
                 ${messageHeader}
                 ${options.messageBody}
             </p>
@@ -17,7 +17,7 @@ const createMessage = (options) => {
 }
 
 const renderMessage = (message) => {
-    document.querySelector('main').innerHTML =+ message
+    document.querySelector('main').innerHTML += message
 }
 
 const formatTime = (timestamp) => {
@@ -32,4 +32,20 @@ const formatTime = (timestamp) => {
 
 const togglePanel = (selector) => {
     document.querySelector(selector).classList.toggle('hidden')
+}
+
+
+/* TEMPORARY */
+const submitMessage = () => {
+    const value = document.querySelector('footer input').value
+
+    renderMessage(createMessage(
+        {
+            origin: 'Jao',
+            target: 'Tets',
+            type: 'public',
+            timestamp: Date.now(),
+            messageBody: value
+        }
+    ))
 }

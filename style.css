@@ -25,6 +25,12 @@ footer {
     padding: 0 18px;
 }
 
+footer input {
+    height: 30px;
+    font-size: 18px;
+    border: none;
+}
+
 main {
     background-color: #f3f3f3;
     height: calc(100vh - 160px);
