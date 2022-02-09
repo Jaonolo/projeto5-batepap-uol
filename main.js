@@ -60,10 +60,12 @@ const checkMessagePrivacy = (message) => {
 /* TEMPORARY */
 const submitMessage = () => {
     const value = document.querySelector('footer input').value
+    if (value === '')
+        return
 
     renderMessage(createMessage(
         {
-            origin: 'Jao',
+            origin: USERNAME,
             target: 'Tets',
             type: 'public',
             timestamp: Date.now(),
