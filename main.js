@@ -1,5 +1,5 @@
 const USERNAME = 'Jao'
-let lastResponse = []
+// let lastResponse = []
 
 const createMessage = (options) => {
 
@@ -19,8 +19,13 @@ const createMessage = (options) => {
     `
 }
 
-const renderMessage = (message) => {
-    document.querySelector('main').innerHTML += message
+const renderMessages = (messages) => {
+    let renderedMessages = ''
+    messages.forEach((elem) => {
+        if(checkMessagePrivacy(elem))
+            renderedMessages += createMessage(elem)
+    })
+    document.querySelector('main').innerHTML = renderedMessages
 }
 
 const formatTime = (time) => {
@@ -38,13 +43,14 @@ const togglePanel = (selector) => {
 }
 
 const loadMessages = () => {
-    axios.get('https://mock-api.driven.com.br/api/v4/uol/messages').then((response) => {
-        let filteredResponse = response.data.filter(elem => !lastResponse.includes(elem))
-        filteredResponse.forEach((elem) => {
-            if(checkMessagePrivacy(elem))
-                renderMessage(createMessage(elem))
-        })
-    })
+    axios
+        .get('https://mock-api.driven.com.br/api/v4/uol/messages')
+        .then((response) => renderMessages(response.data))
+        // console.log(lastResponse)
+        // let filteredResponse = response.data.filter(elem => !lastResponse.includes(elem))
+        // filteredResponse.forEach((elem) => {
+        // lastResponse = response.data
+
 }
 
 const checkMessagePrivacy = (message) => {
@@ -67,7 +73,7 @@ const submitMessage = () => {
     if (value === '')
         return
 
-    renderMessage(createMessage(
+    renderMessages(
         {
             from: USERNAME,
             to: 'Tets',
@@ -75,5 +81,5 @@ const submitMessage = () => {
             time: Date.now(),
             text: value
         }
-    ))
+    )
 }
