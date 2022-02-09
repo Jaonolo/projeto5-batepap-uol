@@ -1,18 +1,19 @@
 const USERNAME = 'Jao'
+let lastResponse = []
 
 const createMessage = (options) => {
 
-    const time = formatTime(options.timestamp)
-    const messageHeader = options.type === 'system' ?
-        `  <strong>${options.origin}</strong>  `:
-        `  <strong>${options.origin}</strong> para <strong>${options.target}</strong>:  `
+    const time = formatTime(options.time)
+    const messageHeader = options.type === 'status' ?
+        `  <strong>${options.from}</strong>  `:
+        `  <strong>${options.from}</strong> para <strong>${options.to}</strong>:  `
 
     return `
         <div class="${options.type}">
             <p>
                 <small>(${time})</small>
                 ${messageHeader}
-                ${options.messageBody}
+                ${options.text}
             </p>
         </div>
     `
@@ -22,8 +23,8 @@ const renderMessage = (message) => {
     document.querySelector('main').innerHTML += message
 }
 
-const formatTime = (timestamp) => {
-    const dateSent = new Date(timestamp)
+const formatTime = (time) => {
+    const dateSent = new Date(time)
 
     const hours = ('' + dateSent.getHours()).padStart(2, '0')
     const minutes = ('' + dateSent.getMinutes()).padStart(2, '0')
@@ -37,15 +38,18 @@ const togglePanel = (selector) => {
 }
 
 const loadMessages = () => {
-    queryServer().forEach((elem) => {
-        if(checkMessagePrivacy(elem))
-            renderMessage(createMessage(elem))
+    axios.get('https://mock-api.driven.com.br/api/v4/uol/messages').then((response) => {
+        let filteredResponse = response.data.filter(elem => !lastResponse.includes(elem))
+        filteredResponse.forEach((elem) => {
+            if(checkMessagePrivacy(elem))
+                renderMessage(createMessage(elem))
+        })
     })
 }
 
 const checkMessagePrivacy = (message) => {
-    isReserved = (message.type === 'reserved')
-    isForMe = (message.target === USERNAME || message.origin === USERNAME)
+    isReserved = (message.type === 'private_message')
+    isForMe = (message.to === USERNAME || message.from === USERNAME)
 
     if(isReserved && !isForMe)
         return false
@@ -54,8 +58,8 @@ const checkMessagePrivacy = (message) => {
 
 
 /* this should be a fuction */
-// loadMessages()
-// setInterval(loadMessages, 3000)
+loadMessages()
+setInterval(loadMessages, 3000)
 
 /* TEMPORARY */
 const submitMessage = () => {
@@ -65,39 +69,11 @@ const submitMessage = () => {
 
     renderMessage(createMessage(
         {
-            origin: USERNAME,
-            target: 'Tets',
+            from: USERNAME,
+            to: 'Tets',
             type: 'public',
-            timestamp: Date.now(),
-            messageBody: value
+            time: Date.now(),
+            text: value
         }
     ))
-}
-
-const queryServer = () => {
-    const value = 'ola ola ola'
-
-    return [
-        {
-            origin: 'Jao',
-            target: 'Tets',
-            type: 'public',
-            timestamp: Date.now(),
-            messageBody: value
-        },
-        {
-            origin: 'Jao',
-            target: 'Tets',
-            type: 'reserved',
-            timestamp: Date.now(),
-            messageBody: value
-        },
-        {
-            origin: 'Tets',
-            target: 'Jao',
-            type: 'reserved',
-            timestamp: Date.now(),
-            messageBody: value
-        }
-    ]
 }

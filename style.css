@@ -42,15 +42,15 @@ main div {
     margin-bottom: 4px;
 }
 
-.system {
+.status {
     background-color: #DCDCDC;
 }
 
-.public {
+.message {
     background-color: #FFFFFF;
 }
 
-.reserved {
+.private_message {
     background-color: #FFDEDE;
 }
 
