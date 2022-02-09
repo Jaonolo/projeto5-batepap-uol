@@ -1,3 +1,5 @@
+const USERNAME = 'Jao'
+
 const createMessage = (options) => {
 
     const time = formatTime(options.timestamp)
@@ -36,10 +38,22 @@ const togglePanel = (selector) => {
 
 const loadMessages = () => {
     queryServer().forEach((elem) => {
-        renderMessage(createMessage(elem))
+        if(checkMessagePrivacy(elem))
+            renderMessage(createMessage(elem))
     })
 }
 
+const checkMessagePrivacy = (message) => {
+    isReserved = (message.type === 'reserved')
+    isForMe = (message.target === USERNAME || message.origin === USERNAME)
+
+    if(isReserved && !isForMe)
+        return false
+    return true
+}
+
+
+/* this should be a fuction */
 // loadMessages()
 // setInterval(loadMessages, 3000)
 
@@ -56,4 +70,32 @@ const submitMessage = () => {
             messageBody: value
         }
     ))
+}
+
+const queryServer = () => {
+    const value = 'ola ola ola'
+
+    return [
+        {
+            origin: 'Jao',
+            target: 'Tets',
+            type: 'public',
+            timestamp: Date.now(),
+            messageBody: value
+        },
+        {
+            origin: 'Jao',
+            target: 'Tets',
+            type: 'reserved',
+            timestamp: Date.now(),
+            messageBody: value
+        },
+        {
+            origin: 'Tets',
+            target: 'Jao',
+            type: 'reserved',
+            timestamp: Date.now(),
+            messageBody: value
+        }
+    ]
 }
