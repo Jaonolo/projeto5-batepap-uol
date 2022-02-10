@@ -67,8 +67,26 @@ const submitMessage = () => {
         {
             from: USERNAME,
             to: 'Tets',
-            type: 'public',
-            text: value
+            text: value,
+            type: 'message'
         }
-    )
+    ).then((message) => {
+        console.log(message)
+    })
+}
+
+const joinRoom = () => {
+    const value = document.querySelector('section input').value
+
+    axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', {
+        name: value
+    }).then((response) => {
+        if(response.status === 200) {
+            togglePanel('section')
+            loadMessages()
+            setInterval(loadMessages, 3000)
+        }
+        else
+            console.log('deu ruim')
+    })
 }
