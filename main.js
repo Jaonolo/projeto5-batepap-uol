@@ -3,7 +3,7 @@ const USERNAME = 'Jao'
 
 const createMessage = (options) => {
 
-    const time = formatTime(options.time)
+    const time = options.time
     const messageHeader = options.type === 'status' ?
         `  <strong>${options.from}</strong>  `:
         `  <strong>${options.from}</strong> para <strong>${options.to}</strong>:  `
@@ -78,7 +78,7 @@ const submitMessage = () => {
             from: USERNAME,
             to: 'Tets',
             type: 'public',
-            time: Date.now(),
+            time: formatTime(Date.now()),
             text: value
         }
     )
