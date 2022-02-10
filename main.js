@@ -58,13 +58,7 @@ const checkMessagePrivacy = (message) => {
     return true
 }
 
-
-/* this should be a fuction */
-loadMessages()
-setInterval(loadMessages, 3000)
-
-/* TEMPORARY */
-const submitMessage = () => {
+const submitMessage = (form) => {
     const value = document.querySelector('footer input').value
     if (value === '')
         return
@@ -77,6 +71,7 @@ const submitMessage = () => {
             type: 'message'
         }
     ).then((message) => {
+        form.reset()
         console.log(message)
     })
 }
