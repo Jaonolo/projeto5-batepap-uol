@@ -11,11 +11,15 @@ header, footer {
     justify-content: space-between;
     height: 80px;
     align-items: center;
-    font-size: 45px
+    font-size: 45px;
+    width: 100vw;
+    position: fixed;
+    background-color: white;
 }
 
 header {
     padding: 0 22px;
+    top: 0;
 }
 header img {
     height: 53px
@@ -23,6 +27,7 @@ header img {
 
 footer {
     padding: 0 18px;
+    bottom: 0
 }
 
 footer input {
@@ -35,6 +40,8 @@ main {
     background-color: #f3f3f3;
     height: calc(100vh - 160px);
     padding-top: 26px;
+    overflow: auto;
+    margin-top: 80px
 }
 
 main div {
