@@ -1,4 +1,5 @@
 let username = ''
+let target = 'Todos'
 // let lastResponse = []
 
 const createMessage = (options) => {
@@ -66,7 +67,7 @@ const submitMessage = (form) => {
     axios.post('https://mock-api.driven.com.br/api/v4/uol/messages',
         {
             from: username,
-            to: 'Todos',
+            to: target,
             text: value,
             type: 'message'
         }
