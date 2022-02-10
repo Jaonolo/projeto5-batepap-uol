@@ -1,5 +1,6 @@
 let username = ''
 let target = 'Todos'
+let privacy = 'message'
 // let lastResponse = []
 
 const createMessage = (options) => {
@@ -69,7 +70,7 @@ const submitMessage = (form) => {
             from: username,
             to: target,
             text: value,
-            type: 'message'
+            type: privacy
         }
     ).then((message) => {
         form.reset()
