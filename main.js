@@ -28,16 +28,6 @@ const renderMessages = (messages) => {
     document.querySelector('main').innerHTML = renderedMessages
 }
 
-const formatTime = (time) => {
-    const dateSent = new Date(time)
-
-    const hours = ('' + dateSent.getHours()).padStart(2, '0')
-    const minutes = ('' + dateSent.getMinutes()).padStart(2, '0')
-    const seconds = ('' + dateSent.getSeconds()).padStart(2, '0')
-
-    return `${hours}:${minutes}:${seconds}`
-}
-
 const togglePanel = (selector) => {
     document.querySelector(selector).classList.toggle('hidden')
 }
@@ -78,7 +68,6 @@ const submitMessage = () => {
             from: USERNAME,
             to: 'Tets',
             type: 'public',
-            time: formatTime(Date.now()),
             text: value
         }
     )
