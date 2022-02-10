@@ -21,8 +21,10 @@
         <!-- Content will be dinamically added here -->
     </main>
     <footer>
-        <input placeholder="Escreva aqui..." type="text">
-        <ion-icon name="paper-plane-outline" onclick="submitMessage()"></ion-icon>
+        <form action="" onsubmit="submitMessage()">
+            <input placeholder="Escreva aqui..." type="text">
+            <ion-icon name="paper-plane-outline" onclick="this.form.submit()"></ion-icon>
+        </form>
     </footer>
 
     <aside class="hidden">
