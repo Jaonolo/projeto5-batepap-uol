@@ -63,7 +63,7 @@ const submitMessage = () => {
     if (value === '')
         return
 
-    renderMessages(
+    axios.post('https://mock-api.driven.com.br/api/v4/uol/messages',
         {
             from: USERNAME,
             to: 'Tets',
