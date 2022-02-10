@@ -1,4 +1,4 @@
-const USERNAME = 'Jao'
+let username = ''
 // let lastResponse = []
 
 const createMessage = (options) => {
@@ -43,9 +43,15 @@ const loadMessages = () => {
 
 }
 
+const stayActive = () => {
+    axios.post('https://mock-api.driven.com.br/api/v4/uol/status', {
+        name: username
+    })
+}
+
 const checkMessagePrivacy = (message) => {
     isReserved = (message.type === 'private_message')
-    isForMe = (message.to === USERNAME || message.from === USERNAME)
+    isForMe = (message.to === username || message.from === username)
 
     if(isReserved && !isForMe)
         return false
@@ -65,8 +71,8 @@ const submitMessage = () => {
 
     axios.post('https://mock-api.driven.com.br/api/v4/uol/messages',
         {
-            from: USERNAME,
-            to: 'Tets',
+            from: username,
+            to: 'Todos',
             text: value,
             type: 'message'
         }
@@ -76,12 +82,13 @@ const submitMessage = () => {
 }
 
 const joinRoom = () => {
-    const value = document.querySelector('section input').value
+    username = document.querySelector('section input').value
 
     axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', {
-        name: value
+        name: username
     }).then((response) => {
         if(response.status === 200) {
+            setInterval(stayActive, 5000)
             togglePanel('section')
             loadMessages()
             setInterval(loadMessages, 3000)
