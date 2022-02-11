@@ -30,6 +30,7 @@ const renderMessages = (messages) => {
             renderedMessages += createMessage(elem)
     })
     document.querySelector('main').innerHTML = renderedMessages
+    document.querySelector('main').lastElementChild.scrollIntoView()
 }
 
 const togglePanel = (selector) => {
