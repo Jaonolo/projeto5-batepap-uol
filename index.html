@@ -31,23 +31,28 @@
         <div>
             <h1>Escolha um contato para enviar a mensagem:</h1>
             <div>
-                <button onclick="target='Todos';togglePanel('aside')"><ion-icon name="people"></ion-icon>
+                <button onclick="sidebarSelect('target', this)" value="Todos"><ion-icon name="people"></ion-icon>
                     <p>Todos</p>
+                    <ion-icon class='select-symbol' name=heart></ion-icon>
                 </button>
-                <button onclick="target='A';togglePanel('aside')"><ion-icon name="people"></ion-icon>
+                <button onclick="sidebarSelect('target', this)" value="Todos"><ion-icon name="people"></ion-icon>
                     <p>Todos</p>
+                    <ion-icon class='select-symbol' name=heart></ion-icon>
                 </button>
-                <button onclick="target='B';togglePanel('aside')"><ion-icon name="people"></ion-icon>
+                <button onclick="sidebarSelect('target', this)" value="Todos"><ion-icon name="people"></ion-icon>
                     <p>Todos</p>
+                    <ion-icon class='select-symbol' name=heart></ion-icon>
                 </button>
             </div>
             <h1>Escolha a visibilidade:</h1>
             <div>
-                <button onclick="privacy='message';togglePanel('aside')"><ion-icon name="people"></ion-icon>
-                    <p>Todos</p>
+                <button onclick="sidebarSelect('privacy', this)" value="message"><ion-icon name="people"></ion-icon>
+                    <p>Pública</p>
+                    <ion-icon class='select-symbol' name=heart></ion-icon>
                 </button>
-                <button onclick="privacy='private_message';togglePanel('aside')"><ion-icon name="people"></ion-icon>
-                    <p>Todos</p>
+                <button onclick="sidebarSelect('privacy', this)" value="private_message"><ion-icon name="people"></ion-icon>
+                    <p>Reservada</p>
+                    <ion-icon class='select-symbol' name=heart></ion-icon>
                 </button>
             </div>
         </div>

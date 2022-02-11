@@ -1,6 +1,8 @@
 let username = ''
-let target = 'Todos'
-let privacy = 'message'
+let currentOptions = {
+    privacy: 'message',
+    target: 'Todos'
+}
 // let lastResponse = []
 
 const createMessage = (options) => {
@@ -68,9 +70,9 @@ const submitMessage = (form) => {
     axios.post('https://mock-api.driven.com.br/api/v4/uol/messages',
         {
             from: username,
-            to: target,
+            to: currentOptions.target,
             text: value,
-            type: privacy
+            type: currentOptions.privacy
         }
     ).then((message) => {
         form.reset()
@@ -93,4 +95,13 @@ const joinRoom = () => {
         else
             console.log('deu ruim')
     })
+}
+
+const sidebarSelect = (section, button) => {
+    currentOptions[section] = button.getAttribute('value')
+    const selected = button.parentNode.querySelector('.selected')
+    if(selected)
+        selected.classList.remove('selected')
+    button.classList.add('selected')
+    togglePanel('aside')
 }

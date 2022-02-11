@@ -100,7 +100,8 @@ aside > div {
 aside button {
     display: flex;
     align-items: center;
-    gap: 6px
+    gap: 6px;
+    width: 100%
 }
 
 aside h1 {
@@ -111,6 +112,8 @@ aside h1 {
 aside p {
     margin: 8px 0;
     font-size: 16px;
+    flex-grow: 1;
+    text-align: left;
 }
 
 .hidden {
@@ -122,4 +125,12 @@ section {
     z-index: 2;
     flex-direction: column;
     align-items: center;
+}
+
+.select-symbol {
+    color: transparent
+}
+
+.selected .select-symbol {
+    color: green
 }
