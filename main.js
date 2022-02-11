@@ -3,19 +3,24 @@ let currentOptions = {
     privacy: 'message',
     target: 'Todos'
 }
-// let lastResponse = []
+let repeatLoadMessages = null
 
 const createMessage = (options) => {
-
-    const time = options.time
-    const messageHeader = options.type === 'status' ?
-        `  <strong>${options.from}</strong>  `:
-        `  <strong>${options.from}</strong> para <strong>${options.to}</strong>:  `
-
+    switch (options.type){
+        case 'status':
+            messageHeader = `<strong>${options.from}</strong>`
+            break
+        case 'message':
+            messageHeader = `<strong>${options.from}</strong> para <strong>${options.to}</strong>:`
+            break
+        case 'private_message':
+            messageHeader = `<strong>${options.from}</strong> reservadamente para <strong>${options.to}</strong>:`
+    }
+ 
     return `
         <div class="${options.type}">
             <p>
-                <small>(${time})</small>
+                <small>(${options.time})</small>
                 ${messageHeader}
                 ${options.text}
             </p>
@@ -41,10 +46,6 @@ const loadMessages = () => {
     axios
         .get('https://mock-api.driven.com.br/api/v4/uol/messages')
         .then((response) => renderMessages(response.data))
-        // console.log(lastResponse)
-        // let filteredResponse = response.data.filter(elem => !lastResponse.includes(elem))
-        // filteredResponse.forEach((elem) => {
-        // lastResponse = response.data
 
 }
 
@@ -86,15 +87,11 @@ const joinRoom = () => {
 
     axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', {
         name: username
-    }).then((response) => {
-        if(response.status === 200) {
-            setInterval(stayActive, 5000)
-            togglePanel('section')
-            loadMessages()
-            setInterval(loadMessages, 3000)
-        }
-        else
-            console.log('deu ruim')
+    }).then(() => {
+        setInterval(stayActive, 5000)
+        togglePanel('section')
+        loadMessages()
+        repeatLoadMessages = setInterval(loadMessages, 3000)
     })
 }
 

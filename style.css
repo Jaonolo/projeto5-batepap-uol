@@ -1,5 +1,6 @@
 :root {
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif
 }
 
 *, *::before, *::after {
@@ -53,12 +54,22 @@ main {
     height: calc(100vh - 160px);
     padding-top: 26px;
     overflow: auto;
-    margin-top: 80px
+    margin-top: 80px;
+    font-size: 14px;
+    line-height: 20px
 }
 
 main div {
     padding: 12px 9px;
     margin-bottom: 4px;
+    word-break: break-all
+}
+
+main small {
+    color: #AAAAAA
+}
+main strong {
+    font-weight: 700
 }
 
 .status {
