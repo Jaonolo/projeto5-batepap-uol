@@ -1,9 +1,69 @@
+const SRC = 'https://mock-api.driven.com.br/api/v4/uol'
+
 let username = ''
 let currentOptions = {
     privacy: 'message',
     target: 'Todos'
 }
 let repeatLoadMessages = null
+let onlineParticipants = null
+
+// ==============================================================
+
+const joinRoom = () => {
+    username = document.querySelector('section input').value
+
+    axios.post(SRC + '/participants', {
+        name: username
+    })
+    .then(chatInitialize())
+}
+
+const chatInitialize = () => {
+    setInterval(stayActive, 5000)
+    setInterval(loadMessages, 3000)
+    loadMessages()
+    togglePanel('section')
+}
+
+const stayActive = () => {
+    axios.post(SRC + '/status', {
+        name: username
+    })
+}
+
+const queryParticipants = () => {
+    axios.get(SRC + '/participants')
+    .then((message) => onlineParticipants = message.data)
+}
+
+// ==============================================================
+
+const loadMessages = () => {
+    axios
+        .get(SRC + '/messages')
+        .then((response) => renderMessages(response.data))
+
+}
+
+const renderMessages = (messages) => {
+    let renderedMessages = ''
+    messages.forEach((elem) => {
+        if(checkMessagePrivacy(elem))
+            renderedMessages += createMessage(elem)
+    })
+    document.querySelector('main').innerHTML = renderedMessages
+    document.querySelector('main').lastElementChild.scrollIntoView()
+}
+
+const checkMessagePrivacy = (message) => {
+    isReserved = (message.type === 'private_message')
+    isForMe = (message.to === username || message.from === username)
+
+    if(isReserved && !isForMe)
+        return false
+    return true
+}
 
 const createMessage = (options) => {
     switch (options.type){
@@ -28,48 +88,12 @@ const createMessage = (options) => {
     `
 }
 
-const renderMessages = (messages) => {
-    let renderedMessages = ''
-    messages.forEach((elem) => {
-        if(checkMessagePrivacy(elem))
-            renderedMessages += createMessage(elem)
-    })
-    document.querySelector('main').innerHTML = renderedMessages
-    document.querySelector('main').lastElementChild.scrollIntoView()
-}
-
-const togglePanel = (selector) => {
-    document.querySelector(selector).classList.toggle('hidden')
-}
-
-const loadMessages = () => {
-    axios
-        .get('https://mock-api.driven.com.br/api/v4/uol/messages')
-        .then((response) => renderMessages(response.data))
-
-}
-
-const stayActive = () => {
-    axios.post('https://mock-api.driven.com.br/api/v4/uol/status', {
-        name: username
-    })
-}
-
-const checkMessagePrivacy = (message) => {
-    isReserved = (message.type === 'private_message')
-    isForMe = (message.to === username || message.from === username)
-
-    if(isReserved && !isForMe)
-        return false
-    return true
-}
-
 const submitMessage = (form) => {
     const value = document.querySelector('footer input').value
     if (value === '')
         return
 
-    axios.post('https://mock-api.driven.com.br/api/v4/uol/messages',
+    axios.post(SRC + '/messages',
         {
             from: username,
             to: currentOptions.target,
@@ -82,17 +106,10 @@ const submitMessage = (form) => {
     })
 }
 
-const joinRoom = () => {
-    username = document.querySelector('section input').value
+// ==============================================================
 
-    axios.post('https://mock-api.driven.com.br/api/v4/uol/participants', {
-        name: username
-    }).then(() => {
-        setInterval(stayActive, 5000)
-        togglePanel('section')
-        loadMessages()
-        repeatLoadMessages = setInterval(loadMessages, 3000)
-    })
+const togglePanel = (selector) => {
+    document.querySelector(selector).classList.toggle('hidden')
 }
 
 const sidebarSelect = (section, button) => {
