@@ -108,6 +108,11 @@ aside > div {
     padding: 0 17px
 }
 
+.participants {
+    max-height: 30vh;
+    overflow-y: auto;
+}
+
 aside button {
     display: flex;
     align-items: center;

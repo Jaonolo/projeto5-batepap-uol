@@ -23,6 +23,7 @@ const chatInitialize = () => {
     setInterval(stayActive, 5000)
     setInterval(loadMessages, 3000)
     loadMessages()
+    queryParticipants()
     togglePanel('section')
 }
 
@@ -102,7 +103,7 @@ const submitMessage = (form) => {
         }
     ).then((message) => {
         form.reset()
-        console.log(message)
+        loadMessages()
     })
 }
 
@@ -119,4 +120,23 @@ const sidebarSelect = (section, button) => {
         selected.classList.remove('selected')
     button.classList.add('selected')
     togglePanel('aside')
+}
+
+const sidebarContent = () => {
+    const participantsList = document.querySelector('.participants')
+    queryParticipants()
+    
+    participantsList.innerHTML = `
+        <button onclick="sidebarSelect('target', this)" value="Todos"><ion-icon name="people"></ion-icon>
+            <p>Todos</p>
+            <ion-icon class='select-symbol' name='heart'></ion-icon>
+        </button>
+    `
+    onlineParticipants.forEach((user) => {
+        participantsList.innerHTML += `
+            <button onclick="sidebarSelect('target', this)" value="${user.name}"><ion-icon name="person-circle"></ion-icon>
+                <p>${user.name}</p>
+                <ion-icon class='select-symbol' name='heart'></ion-icon>
+            </button>
+    `}) 
 }

@@ -19,7 +19,7 @@
 
     <header>
         <img src="logo2.png" alt="logo-batepapo-uol">
-        <ion-icon name="people" onclick="togglePanel('aside')"></ion-icon>
+        <ion-icon name="people" onclick="togglePanel('aside');sidebarContent()"></ion-icon>
     </header>
     <main>
         <!-- Content will be dinamically added here -->
@@ -34,29 +34,17 @@
     <aside class="hidden">
         <div>
             <h1>Escolha um contato para enviar a mensagem:</h1>
-            <div>
-                <button onclick="sidebarSelect('target', this)" value="Todos"><ion-icon name="people"></ion-icon>
-                    <p>Todos</p>
-                    <ion-icon class='select-symbol' name=heart></ion-icon>
-                </button>
-                <button onclick="sidebarSelect('target', this)" value="Todos"><ion-icon name="people"></ion-icon>
-                    <p>Todos</p>
-                    <ion-icon class='select-symbol' name=heart></ion-icon>
-                </button>
-                <button onclick="sidebarSelect('target', this)" value="Todos"><ion-icon name="people"></ion-icon>
-                    <p>Todos</p>
-                    <ion-icon class='select-symbol' name=heart></ion-icon>
-                </button>
+            <div class='participants'>
             </div>
             <h1>Escolha a visibilidade:</h1>
             <div>
                 <button onclick="sidebarSelect('privacy', this)" value="message"><ion-icon name="people"></ion-icon>
                     <p>Pública</p>
-                    <ion-icon class='select-symbol' name=heart></ion-icon>
+                    <ion-icon class='select-symbol' name='heart'></ion-icon>
                 </button>
                 <button onclick="sidebarSelect('privacy', this)" value="private_message"><ion-icon name="people"></ion-icon>
                     <p>Reservada</p>
-                    <ion-icon class='select-symbol' name=heart></ion-icon>
+                    <ion-icon class='select-symbol' name='heart'></ion-icon>
                 </button>
             </div>
         </div>
