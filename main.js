@@ -5,7 +5,6 @@ let currentOptions = {
     privacy: 'message',
     target: 'Todos'
 }
-let repeatLoadMessages = null
 let onlineParticipants = null
 
 // ==============================================================
@@ -132,18 +131,23 @@ const sidebarSelect = (section, button) => {
 const sidebarContent = () => {
     const participantsList = document.querySelector('.participants')
     queryParticipants()
-    
+
+    let buttonClass = currentOptions['target'] === 'Todos' ? 'selected' : '' 
     participantsList.innerHTML = `
-        <button onclick="sidebarSelect('target', this)" value="Todos"><ion-icon name="people"></ion-icon>
+        <button onclick="sidebarSelect('target', this)" value="Todos" class="${buttonClass}">
+            <ion-icon name="people"></ion-icon>
             <p>Todos</p>
             <ion-icon class='select-symbol' name='heart'></ion-icon>
         </button>
     `
     onlineParticipants.forEach((user) => {
+        buttonClass = currentOptions['target'] === user.name ? 'selected' : ''  
         participantsList.innerHTML += `
-            <button onclick="sidebarSelect('target', this)" value="${user.name}"><ion-icon name="person-circle"></ion-icon>
+            <button onclick="sidebarSelect('target', this)" value="${user.name}" class="${buttonClass}">
+                <ion-icon name="person-circle"></ion-icon>
                 <p>${user.name}</p>
                 <ion-icon class='select-symbol' name='heart'></ion-icon>
             </button>
-    `}) 
+        `
+    }) 
 }

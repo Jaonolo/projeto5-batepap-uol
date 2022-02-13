@@ -49,6 +49,10 @@ footer input {
     border: none;
 }
 
+footer input::placeholder {
+    font-style: italic;
+}
+
 main {
     background-color: #f3f3f3;
     height: calc(100vh - 160px);
@@ -127,6 +131,7 @@ aside button {
 aside h1 {
     margin: 24px 0;
     font-size: 16px;
+    font-weight: 700
 }
 
 aside p {
