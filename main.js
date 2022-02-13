@@ -27,6 +27,7 @@ const chatInitialize = () => {
     setInterval(loadMessages, 3000)
     loadMessages()
     queryParticipants()
+    targetText()
     togglePanel('section')
 }
 
@@ -125,6 +126,7 @@ const sidebarSelect = (section, button) => {
     if(selected)
         selected.classList.remove('selected')
     button.classList.add('selected')
+    targetText()
     togglePanel('aside')
 }
 
@@ -150,4 +152,11 @@ const sidebarContent = () => {
             </button>
         `
     }) 
+}
+
+const targetText = () => {
+    const targetTextContainer = document.querySelector('form p')
+    const privacy = currentOptions['privacy'] === 'message' ? '' : ' (reservadamente)'
+
+    targetTextContainer.innerText = `Enviando para ${currentOptions['target']}${privacy}`
 }

@@ -109,7 +109,8 @@ aside > div {
     width: 260px;
     background-color: white;
     text-align: center;
-    padding: 0 17px
+    padding: 0 17px;
+    transition: width 100s;
 }
 
 article {
@@ -119,6 +120,7 @@ article {
 .participants {
     max-height: 30vh;
     overflow-y: auto;
+    overflow-x: hidden
 }
 
 aside button {
@@ -145,11 +147,56 @@ aside p {
     display: none
 }
 
+aside.hidden > div {
+    width: 0
+}
+
 section {
     background-color: white;
     z-index: 2;
     flex-direction: column;
     align-items: center;
+    padding-top: 72px;
+    gap: 94px
+}
+
+section input {
+    width: 260px;
+    height: 64px;
+    font-size: 18px;
+    text-align: center;
+}
+
+section input::placeholder {
+    color: #aeaeae;
+
+}
+
+section form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+section button {
+    height: 45px;
+    width: 110px;
+    border-radius: 9px;
+    background-color: #e7e7e7;
+    color: #696969
+}
+
+form p {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
 }
 
 .select-symbol {

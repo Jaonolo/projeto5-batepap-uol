@@ -26,7 +26,10 @@
     </main>
     <footer>
         <form action="" onsubmit="submitMessage(this)">
-            <input placeholder="Escreva aqui..." type="text">
+            <div>
+                <input placeholder="Escreva aqui..." type="text">
+                <p></p>
+            </div>
             <button type="submit"><ion-icon name="paper-plane-outline"></ion-icon></button>
         </form>
     </footer>
@@ -53,8 +56,10 @@
 
     <section>
         <img src="logo2.png" alt="logo-batepapo-uol">
-        <input type="text">
-        <button onclick="joinRoom()">oi</button>
+        <form action="" onsubmit="joinRoom()">
+            <input placeholder="Digite seu nome" type="text">
+            <button type="submit">Entrar</button>
+        </form>
     </section>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
