@@ -13,10 +13,14 @@ let onlineParticipants = null
 const joinRoom = () => {
     username = document.querySelector('section input').value
 
-    axios.post(SRC + '/participants', {
-        name: username
-    })
-    .then(chatInitialize())
+    axios
+        .post(SRC + '/participants', 
+            {
+                name: username
+            }
+        )
+        .then(chatInitialize)
+        .catch(()=>{alert('Nome em uso! Escolha outro nome')})
 }
 
 const chatInitialize = () => {
@@ -34,8 +38,11 @@ const stayActive = () => {
 }
 
 const queryParticipants = () => {
-    axios.get(SRC + '/participants')
-    .then((message) => onlineParticipants = message.data)
+    axios
+        .get(SRC + '/participants')
+        .then((response) => onlineParticipants = response.data.filter(
+            (user) => {return user.name !== username}
+        ))
 }
 
 // ==============================================================

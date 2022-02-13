@@ -108,6 +108,10 @@ aside > div {
     padding: 0 17px
 }
 
+article {
+    flex-grow: 1
+}
+
 .participants {
     max-height: 30vh;
     overflow-y: auto;
