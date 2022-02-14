@@ -7,26 +7,6 @@ let currentOptions = {
 }
 let onlineParticipants = []
 
-const loadingScreen = `
-    <p>Entrando...</p>
-`
-
-// ==============================================================
-
-const joinRoom = () => {
-    username = document.querySelector('section input').value
-    document.querySelector('section form').innerHTML = loadingScreen
-
-    axios
-        .post(SRC + '/participants', {
-                name: username
-            }
-        )
-        .then(chatInitialize)
-        .catch((response)=>{alert('Nome em uso! Escolha outro nome:\n' + response)})
-    
-}
-
 const chatInitialize = () => {
     setInterval(stayActive, 5000)
     setInterval(loadMessages, 3000)
@@ -35,43 +15,6 @@ const chatInitialize = () => {
     queryParticipants()
     targetText()
     togglePanel('section')
-}
-
-const stayActive = () => {
-    axios
-        .post(SRC + '/status', {
-            name: username
-        })
-        .catch(()=>{
-            alert('Falha ao mantê-lo online, favor reconecte-se')
-            window.location.reload()
-        })
-}
-
-const queryParticipants = () => {
-    axios
-        .get(SRC + '/participants')
-        .then((response) => {
-            onlineParticipants = response.data.filter((user) => {return user.name !== username})
-            sidebarContent()
-        })
-        .catch(()=>{
-            alert('Falha ao carregar lista de usuários, favor reconecte-se')
-            window.location.reload()
-        })
-}
-
-// ==============================================================
-
-const loadMessages = () => {
-    axios
-        .get(SRC + '/messages')
-        .then((response) => renderMessages(response.data))
-        .catch(()=>{
-            alert('Falha ao carregar novas mensagens, favor reconecte-se')
-            window.location.reload()
-        })
-
 }
 
 const renderMessages = (messages) => {
@@ -93,53 +36,6 @@ const checkMessagePrivacy = (message) => {
     return true
 }
 
-const createMessage = (options) => {
-    let messageHeader = ''
-    switch (options.type){
-        case 'private_message':
-            messageHeader = ` reservadamente`
-        case 'message':
-            messageHeader = messageHeader + ` para <strong>${options.to}</strong>:`
-        case 'status':
-            messageHeader = `<strong>${options.from}</strong>` + messageHeader
-    }
- 
-    return `
-        <div class="${options.type}" data-identifier="message">
-            <p>
-                <small>(${options.time})</small>
-                ${messageHeader}
-                ${options.text}
-            </p>
-        </div>
-    `
-}
-
-const submitMessage = (form) => {
-    const value = document.querySelector('footer input').value
-    if (value === '')
-        return
-
-    axios.post(SRC + '/messages',
-        {
-            from: username,
-            to: currentOptions.target,
-            text: value,
-            type: currentOptions.privacy
-        }
-    ).then((message) => {
-        form.reset()
-        loadMessages()
-    })
-    .catch(()=>{
-        alert('Falha ao enviar sua mensagem, favor reconecte-se')
-        window.location.reload()
-    })
-
-}
-
-// ==============================================================
-
 const togglePanel = (selector) => {
     document.querySelector(selector).classList.toggle('hidden')
     if (selector === 'aside')
@@ -159,24 +55,13 @@ const sidebarSelect = (section, button) => {
 
 const sidebarContent = () => {
     const participantsList = document.querySelector('.participants')
+ 
     let buttonClass = currentOptions['target'] === 'Todos' ? 'selected' : '' 
-    participantsList.innerHTML = `
-        <button onclick="sidebarSelect('target', this)" value="Todos" class="${buttonClass}" data-identifier="participant">
-            <ion-icon name="people"></ion-icon>
-            <p>Todos</p>
-            <ion-icon class='select-symbol' name='checkmark'></ion-icon>
-        </button>
-    `
+    participantsList.innerHTML = sidebarContentHTML(buttonClass, 'Todos', 'people')
 
     onlineParticipants.forEach((user) => {
         buttonClass = currentOptions['target'] === user.name ? 'selected' : ''  
-        participantsList.innerHTML += `
-            <button onclick="sidebarSelect('target', this)" value="${user.name}" class="${buttonClass}" data-identifier="participant">
-                <ion-icon name="person-circle"></ion-icon>
-                <p>${user.name}</p>
-                <ion-icon class='select-symbol' name='checkmark'></ion-icon>
-            </button>
-        `
+        participantsList.innerHTML += sidebarContentHTML(buttonClass, user.name, 'person-circle')
     }) 
 }
 
