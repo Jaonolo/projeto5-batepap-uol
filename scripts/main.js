@@ -5,7 +5,7 @@ let currentOptions = {
     privacy: 'message',
     target: 'Todos'
 }
-let onlineParticipants = null
+let onlineParticipants = []
 
 // ==============================================================
 
@@ -18,15 +18,16 @@ const joinRoom = () => {
             }
         )
         .then(chatInitialize)
-        .catch(()=>{alert('Nome em uso! Escolha outro nome')})
+        .catch((response)=>{alert('Nome em uso! Escolha outro nome:\n' + response)})
+    
 }
 
 const chatInitialize = () => {
     setInterval(stayActive, 5000)
     setInterval(loadMessages, 3000)
-    setInterval(sidebarContent, 10000)
+    setInterval(queryParticipants, 10000)
     loadMessages()
-    sidebarContent()
+    queryParticipants()
     targetText()
     togglePanel('section')
 }
@@ -45,9 +46,10 @@ const stayActive = () => {
 const queryParticipants = () => {
     axios
         .get(SRC + '/participants')
-        .then((response) => onlineParticipants = response.data.filter(
-            (user) => {return user.name !== username}
-        ))
+        .then((response) => {
+            onlineParticipants = response.data.filter((user) => {return user.name !== username})
+            sidebarContent()
+        })
         .catch(()=>{
             alert('Falha ao carregar lista de usuários, favor reconecte-se')
             window.location.reload()
@@ -98,7 +100,7 @@ const createMessage = (options) => {
     }
  
     return `
-        <div class="${options.type}">
+        <div class="${options.type}" data-identifier="message">
             <p>
                 <small>(${options.time})</small>
                 ${messageHeader}
@@ -152,20 +154,19 @@ const sidebarSelect = (section, button) => {
 
 const sidebarContent = () => {
     const participantsList = document.querySelector('.participants')
-    queryParticipants()
-
     let buttonClass = currentOptions['target'] === 'Todos' ? 'selected' : '' 
     participantsList.innerHTML = `
-        <button onclick="sidebarSelect('target', this)" value="Todos" class="${buttonClass}">
+        <button onclick="sidebarSelect('target', this)" value="Todos" class="${buttonClass}" data-identifier="participant">
             <ion-icon name="people"></ion-icon>
             <p>Todos</p>
             <ion-icon class='select-symbol' name='checkmark'></ion-icon>
         </button>
     `
+
     onlineParticipants.forEach((user) => {
         buttonClass = currentOptions['target'] === user.name ? 'selected' : ''  
         participantsList.innerHTML += `
-            <button onclick="sidebarSelect('target', this)" value="${user.name}" class="${buttonClass}">
+            <button onclick="sidebarSelect('target', this)" value="${user.name}" class="${buttonClass}" data-identifier="participant">
                 <ion-icon name="person-circle"></ion-icon>
                 <p>${user.name}</p>
                 <ion-icon class='select-symbol' name='checkmark'></ion-icon>
