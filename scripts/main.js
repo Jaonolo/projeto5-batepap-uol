@@ -24,8 +24,9 @@ const joinRoom = () => {
 const chatInitialize = () => {
     setInterval(stayActive, 5000)
     setInterval(loadMessages, 3000)
+    setInterval(sidebarContent, 10000)
     loadMessages()
-    queryParticipants()
+    sidebarContent()
     targetText()
     togglePanel('section')
 }
