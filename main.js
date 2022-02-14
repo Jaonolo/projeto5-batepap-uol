@@ -118,6 +118,10 @@ const submitMessage = (form) => {
 
 const togglePanel = (selector) => {
     document.querySelector(selector).classList.toggle('hidden')
+    if (selector === 'aside')
+        setTimeout(() => {
+            document.querySelector('aside > div').classList.toggle('sidebar-grow')
+        }, 250)
 }
 
 const sidebarSelect = (section, button) => {
@@ -127,7 +131,6 @@ const sidebarSelect = (section, button) => {
         selected.classList.remove('selected')
     button.classList.add('selected')
     targetText()
-    togglePanel('aside')
 }
 
 const sidebarContent = () => {
@@ -139,7 +142,7 @@ const sidebarContent = () => {
         <button onclick="sidebarSelect('target', this)" value="Todos" class="${buttonClass}">
             <ion-icon name="people"></ion-icon>
             <p>Todos</p>
-            <ion-icon class='select-symbol' name='heart'></ion-icon>
+            <ion-icon class='select-symbol' name='checkmark'></ion-icon>
         </button>
     `
     onlineParticipants.forEach((user) => {
@@ -148,7 +151,7 @@ const sidebarContent = () => {
             <button onclick="sidebarSelect('target', this)" value="${user.name}" class="${buttonClass}">
                 <ion-icon name="person-circle"></ion-icon>
                 <p>${user.name}</p>
-                <ion-icon class='select-symbol' name='heart'></ion-icon>
+                <ion-icon class='select-symbol' name='checkmark'></ion-icon>
             </button>
         `
     }) 

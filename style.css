@@ -7,6 +7,10 @@
     box-sizing: inherit;
 }
 
+body {
+    overflow: hidden
+}
+
 button {    
     background-color: transparent;
     border: none;
@@ -110,7 +114,11 @@ aside > div {
     background-color: white;
     text-align: center;
     padding: 0 17px;
-    transition: width 100s;
+    transition: transform 1s
+}
+
+.sidebar-grow {
+    transform: translateX(100%);
 }
 
 article {
@@ -145,10 +153,6 @@ aside p {
 
 .hidden {
     display: none
-}
-
-aside.hidden > div {
-    width: 0
 }
 
 section {
