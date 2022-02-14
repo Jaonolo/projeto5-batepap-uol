@@ -24,7 +24,7 @@
         <!-- Content will be dinamically added here -->
     </main>
     <footer>
-        <form action="" onsubmit="submitMessage(this)">
+        <form action="#" onsubmit="submitMessage(this);return false">
             <div>
                 <input placeholder="Escreva aqui..." type="text">
                 <p></p>
@@ -55,7 +55,7 @@
 
     <section>
         <img src="public/logo2.png" alt="logo-batepapo-uol">
-        <form action="" onsubmit="joinRoom()">
+        <form action="#" onsubmit="joinRoom();return false">
             <input placeholder="Digite seu nome" type="text" data-identifier="enter-name">
             <button type="submit" data-identifier="start">Entrar</button>
         </form>
