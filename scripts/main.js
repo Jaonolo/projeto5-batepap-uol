@@ -7,10 +7,15 @@ let currentOptions = {
 }
 let onlineParticipants = []
 
+const loadingScreen = `
+    <p>Entrando...</p>
+`
+
 // ==============================================================
 
 const joinRoom = () => {
     username = document.querySelector('section input').value
+    document.querySelector('section form').innerHTML = loadingScreen
 
     axios
         .post(SRC + '/participants', {
