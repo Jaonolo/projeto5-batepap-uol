@@ -13,8 +13,7 @@ const joinRoom = () => {
     username = document.querySelector('section input').value
 
     axios
-        .post(SRC + '/participants', 
-            {
+        .post(SRC + '/participants', {
                 name: username
             }
         )
@@ -32,9 +31,14 @@ const chatInitialize = () => {
 }
 
 const stayActive = () => {
-    axios.post(SRC + '/status', {
-        name: username
-    })
+    axios
+        .post(SRC + '/status', {
+            name: username
+        })
+        .catch(()=>{
+            alert('Falha ao mantê-lo online, favor reconecte-se')
+            window.location.reload()
+        })
 }
 
 const queryParticipants = () => {
@@ -43,6 +47,10 @@ const queryParticipants = () => {
         .then((response) => onlineParticipants = response.data.filter(
             (user) => {return user.name !== username}
         ))
+        .catch(()=>{
+            alert('Falha ao carregar lista de usuários, favor reconecte-se')
+            window.location.reload()
+        })
 }
 
 // ==============================================================
@@ -51,6 +59,10 @@ const loadMessages = () => {
     axios
         .get(SRC + '/messages')
         .then((response) => renderMessages(response.data))
+        .catch(()=>{
+            alert('Falha ao carregar novas mensagens, favor reconecte-se')
+            window.location.reload()
+        })
 
 }
 
@@ -74,15 +86,14 @@ const checkMessagePrivacy = (message) => {
 }
 
 const createMessage = (options) => {
+    let messageHeader = ''
     switch (options.type){
-        case 'status':
-            messageHeader = `<strong>${options.from}</strong>`
-            break
-        case 'message':
-            messageHeader = `<strong>${options.from}</strong> para <strong>${options.to}</strong>:`
-            break
         case 'private_message':
-            messageHeader = `<strong>${options.from}</strong> reservadamente para <strong>${options.to}</strong>:`
+            messageHeader = ` reservadamente`
+        case 'message':
+            messageHeader = messageHeader + ` para <strong>${options.to}</strong>:`
+        case 'status':
+            messageHeader = `<strong>${options.from}</strong>` + messageHeader
     }
  
     return `
@@ -112,6 +123,11 @@ const submitMessage = (form) => {
         form.reset()
         loadMessages()
     })
+    .catch(()=>{
+        alert('Falha ao enviar sua mensagem, favor reconecte-se')
+        window.location.reload()
+    })
+
 }
 
 // ==============================================================
